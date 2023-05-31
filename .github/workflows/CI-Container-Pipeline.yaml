@@ -1,0 +1,93 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+    - 'feature/**'
+    - 'hotfix/**'
+    - 'releases/**'
+    - 'develop'
+  workflow_call:
+
+jobs:
+  Build:
+    name: 'Solution Build'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Cache Nuget binaries
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
+    - run: dotnet build
+
+  Security-Checks:
+    name: 'Security Checks'
+    needs: [Build]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Check for NuGet Vulnerabilites
+      shell: pwsh
+      run: |
+          dotnet list package --vulnerable --include-transitive 2>&1 | tee build.log
+          echo "Analyze dotnet list package command log output..."
+          exit (Select-String -Path "build.log" -Pattern "has the following vulnerable packages" -AllMatches).Matches.Count -gt 0 ? 1 : 0
+
+  End-To-End-Testing:
+    needs: [Security-Checks]
+    name: 'Playwright End-To-End Testing'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright/dotnet:v1.32.0-jammy
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Cache Nuget binaries
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
+    - name: Cache playwright binaries
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-PLAYWRIGHT_VERSION=1.32.0
+
+    - name: 'Setup Playwright'
+      run: |
+        dotnet build
+        pwsh ./PlayWithPlayWright/Playwright/bin/Debug/net7.0/playwright.ps1 install --with-deps
+
+    - name: Run Playwright Tests
+      run: dotnet test ./PlayWithPlayWright/Playwright/Playwright.csproj
