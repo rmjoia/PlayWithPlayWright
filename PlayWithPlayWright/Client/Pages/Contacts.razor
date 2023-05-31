@@ -1,0 +1,104 @@
+﻿@page "/contacts"
+@using PlayWithPlayWright.Shared.Models;
+
+<PageTitle>Play With PlayWright - Contacts us page</PageTitle>
+
+<h1 class="mt-2 mb-5">Contacts</h1>
+
+<p>
+    <h3>
+        ATU Contacts:
+    </h3>
+
+    Some Random address at County Tipperary. 3CPO R2D2. Republic of Ireland.<br />
+    <i class="oi oi-envelope-closed" /> emaill@domain.ie<br />
+    <i class="oi oi-phone" /> +353 (0)12 222 9900<br />
+    <i class="oi oi-print" /> +353 (0)34 888 0077<br />
+</p>
+
+
+<!-- contactFormModal -->
+<div class="modal fade" id="contactFormModal" tabindex="-1" aria-labelledby="contactFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Contact Form Submission</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @if (isFormValid)
+                {
+                    <p>Would have sent the form to the destination email with the following data:</p>
+                    <p><span class="fw-bold">Name: </span>@contactForm.Name</p>
+                    <p><span class="fw-bold">Subject: </span>@contactForm.Subject</p>
+                    <p><span class="fw-bold">Email: </span>@contactForm.Email</p>
+                    <p><span class="fw-bold">Message: </span>@contactForm.Message</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <h3>
+        Contact Form:
+    </h3>
+
+    If you prefer, reach out to us using the contact form<br />
+
+
+    <div class="row align-items-start mt-2 mb-5">
+        <div class="col-6">
+            <EditForm Model="@contactForm" OnSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+
+                <p>
+                    <div class="form-floating">
+                        <InputText type="text" class="form-control" id="name" placeholder="Name" @bind-Value="contactForm.Name" />
+                        <label for="name">Name</label>
+                        <ValidationMessage For="@(() => contactForm.Name)" />
+                    </div>
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputText type="text" class="form-control" id="subject" placeholder="Subject" @bind-Value="contactForm.Subject" />
+                        <label for="subject">Subject</label>
+                        <ValidationMessage For="@(() => contactForm.Subject)" />
+                    </div>
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputText type="email" class="form-control" id="email" placeholder="name@domain.ie" @bind-Value="contactForm.Email" />
+                        <label for="email">Email address</label>
+                        <ValidationMessage For="@(() => contactForm.Email)" />
+                    </div>
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputTextArea class="form-control form-message-box" placeholder="Enter your message here" id="message" @bind-Value="contactForm.Message" />
+                        <label for="message">Message</label>
+                        <ValidationMessage For="@(() => contactForm.Message)" />
+                    </div>
+                </p>
+
+                <button class="btn btn-primary start-0" @onclick="@(() => HandleSubmit())" data-bs-toggle="modal" disabled="@(!context.Validate() || !context.IsModified())" data-bs-target="#contactFormModal">Send Message</button>
+            </EditForm>
+        </div>
+    </div>
+</p>
+
+@code {
+    private ContactForm contactForm = new();
+    private bool isFormValid = false;
+
+    private void HandleSubmit()
+    {
+        isFormValid = true;
+
+    }
+}

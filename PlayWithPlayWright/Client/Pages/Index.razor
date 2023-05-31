@@ -1,10 +1,32 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Play With Playwright Demo page</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, Playwright!</h1>
 
-Welcome to your new app.
+<p>
+    This app was created as an example of how to use Playwright with a dotnet solution.
+</p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<p>
+    <a href="https://playwright.dev/dotnet/docs/intro" target="_blank" title="Playwright dotnet documentation">
+        <img src="@playwrightLogoURI" alt="Playwright logo" class="logo" />
+        <img src="@dotnetRobotURI" alt=".Net logo" class="logo" />
+        documentation
+    </a>
+</p>
+    
+<p>
+    <a href="https://github.com/microsoft/playwright-dotnet" target="_blank" title="Playwright dotnet GitHub">
+        <img src="@playwrightLogoURI" alt="Playwright logo" class="logo" />
+        <img src="@dotnetRobotURI" alt=".Net logo" class="logo" />
+        Paywright dotnet on Github
+    </a>
+</p>
 
+@code {
+
+    const string dotnetRobotURI = "https://upload.wikimedia.org/wikipedia/commons/4/43/Dotnet-bot.svg";
+    const string playwrightLogoURI = "https://playwright.dev/dotnet/img/playwright-logo.svg";
+
+}

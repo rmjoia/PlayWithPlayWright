@@ -1,0 +1,112 @@
+﻿@page "/report-an-issue"
+@using PlayWithPlayWright.Shared.Models;
+
+<PageTitle>Play With PlayWright - Report an issue page</PageTitle>
+
+<h1 class="mt-2 mb-5">Report an Issue</h1>
+
+<p>
+    Some Form example...
+    <small>The intent is to demo tests with date pickers</small>
+</p>
+
+
+<!-- issueFormModal -->
+<div class="modal fade" id="reportAnIssueFormModal" tabindex="-1" aria-labelledby="reportAnIssueFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report an Issue Form Submission</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @if (isFormValid)
+                {
+                    <p>Would have sent the report incident with the following data:</p>
+                    <p><span class="fw-bold">Title: </span>@reportIssueForm.Title</p>
+                    <p><span class="fw-bold">Short Description: </span>@reportIssueForm.ShortDescription</p>
+                    <p><span class="fw-bold">Date Detected: </span>@reportIssueForm.IssueDate</p>
+                    <p><span class="fw-bold">Concact Email: </span>@reportIssueForm.Email</p>
+                    <p><span class="fw-bold">Description: </span>@reportIssueForm.Description</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <h3>
+        Contact Form:
+    </h3>
+
+    If you refer, reach out to us using the contact form<br />
+
+
+    <div class="row align-items-start mt-2 mb-5">
+        <div class="col-6">
+            <EditForm Model="@reportIssueForm" OnSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+
+                <p>
+                    <div class="form-floating">
+                        <InputText type="text" class="form-control" id="title" placeholder="Title" @bind-Value="reportIssueForm.Title" />
+                        <label for="title">Title</label>
+                        <ValidationMessage For="@(() => reportIssueForm.Title)" />
+                    </div>
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputText type="text" class="form-control" id="shortDescription" placeholder="Short Description" @bind-Value="reportIssueForm.ShortDescription" />
+                        <label for="shortDescription">Short Description</label>
+                        <ValidationMessage For="@(() => reportIssueForm.ShortDescription)" />
+                    </div>
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputDate class="form-control" id="issueDate" placeholder="31/05/2023" max="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" @bind-Value="reportIssueForm.IssueDate" />
+                        <label for="issueDate">Date Detected</label>
+                        <ValidationMessage For="@(() => reportIssueForm.IssueDate)" />
+                    </div>
+
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputText type="email" class="form-control" id="email" placeholder="name@domain.ie" @bind-Value="reportIssueForm.Email" />
+                        <label for="email">Email address for contact</label>
+                        <ValidationMessage For="@(() => reportIssueForm.Email)" />
+                    </div>
+                </p>
+
+                <p>
+                    <div class="form-floating">
+                        <InputTextArea class="form-control form-message-box" placeholder="Describe the issue here" id="description" @bind-Value="reportIssueForm.Description" />
+                        <label for="description">Description</label>
+                        <ValidationMessage For="@(() => reportIssueForm.Description)" />
+                    </div>
+                </p>
+
+                <button class="btn btn-primary start-0" @onclick="@(() => HandleSubmit())" data-bs-toggle="modal" disabled="@(!context.Validate() || !context.IsModified())" data-bs-target="#reportAnIssueFormModal">Send Message</button>
+            </EditForm>
+        </div>
+    </div>
+</p>
+
+@code {
+    private ReportAnIssueForm reportIssueForm = new()
+    {
+        IssueDate = DateOnly.FromDateTime(DateTime.Now)
+    };
+
+    private bool isFormValid = false;
+
+    private void HandleSubmit()
+    {
+        isFormValid = true;
+
+    }
+}
