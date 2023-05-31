@@ -7,7 +7,6 @@ on:
     - 'hotfix/**'
     - 'releases/**'
     - 'develop'
-  workflow_call:
 
 jobs:
   Build:
