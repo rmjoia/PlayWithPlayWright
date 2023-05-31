@@ -59,13 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-
-    - name: Azure Login
-      uses: Azure/login@v1.4.6
-      with:
-        creds: '{"clientId":"${{ secrets.servicePrincipalId }}","clientSecret":"${{ secrets.servicePrincipalKey }}","subscriptionId":"${{ secrets.SubscriptionId }}","tenantId":"${{ secrets.tenantId }}"}'
-        enable-AzPSSession: true
-
+    
     - name: Setup dotnet
       uses: actions/setup-dotnet@v3
       with:

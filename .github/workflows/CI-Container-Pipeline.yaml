@@ -83,10 +83,5 @@ jobs:
           ~/.cache/ms-playwright
         key: ${{ runner.os }}-playwright-PLAYWRIGHT_VERSION=1.32.0
 
-    - name: 'Setup Playwright'
-      run: |
-        dotnet build
-        pwsh ./PlayWithPlayWright/Playwright/bin/Debug/net7.0/playwright.ps1 install --with-deps
-
     - name: Run Playwright Tests
       run: dotnet test ./PlayWithPlayWright/Playwright/Playwright.csproj
