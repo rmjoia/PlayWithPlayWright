@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿// CA1852 Type 'Program' can be sealed because it has no subtypes in its containing assembly and is not externally visible
+#pragma warning disable CA1852
+
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using PlayWithPlayWright.Server.Data;
 using PlayWithPlayWright.Server.Models;

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayWithPlayWright.Client",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayWithPlayWright.Shared", "PlayWithPlayWright\Shared\PlayWithPlayWright.Shared.csproj", "{17404B49-7BA4-4A00-9BEE-102650168778}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playwright", "PlayWithPlayWright\Playwright\Playwright.csproj", "{3872E8BA-A34E-4EB0-BA8A-C16FEE02AABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{17404B49-7BA4-4A00-9BEE-102650168778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17404B49-7BA4-4A00-9BEE-102650168778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17404B49-7BA4-4A00-9BEE-102650168778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3872E8BA-A34E-4EB0-BA8A-C16FEE02AABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3872E8BA-A34E-4EB0-BA8A-C16FEE02AABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3872E8BA-A34E-4EB0-BA8A-C16FEE02AABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3872E8BA-A34E-4EB0-BA8A-C16FEE02AABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
