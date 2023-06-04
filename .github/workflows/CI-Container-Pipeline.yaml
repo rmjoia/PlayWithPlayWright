@@ -58,7 +58,7 @@ jobs:
     name: 'Playwright End-To-End Testing'
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright/dotnet:v1.32.0-jammy
+      image: mcr.microsoft.com/playwright/dotnet:v1.34.0-jammy
     steps:
     - uses: actions/checkout@v3
 
@@ -81,7 +81,7 @@ jobs:
       with:
         path: |
           ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-PLAYWRIGHT_VERSION=1.32.0
+        key: ${{ runner.os }}-playwright-PLAYWRIGHT_VERSION=1.34.0
 
     - name: Run Playwright Tests
       run: dotnet test ./PlayWithPlayWright/Playwright/Playwright.csproj
