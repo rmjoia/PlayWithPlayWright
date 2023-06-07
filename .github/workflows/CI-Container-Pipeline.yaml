@@ -75,13 +75,5 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-nuget
 
-    - name: Cache playwright binaries
-      uses: actions/cache@v3
-      id: playwright-cache
-      with:
-        path: |
-          ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-PLAYWRIGHT_VERSION=1.32.0
-
     - name: Run Playwright Tests
       run: dotnet test ./PlayWithPlayWright/Playwright/Playwright.csproj
